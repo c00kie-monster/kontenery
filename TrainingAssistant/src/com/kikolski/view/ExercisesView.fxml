@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:id="exercisesTab" fx:controller="com.kikolski.controller.ExercisesController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <ListView fx:id="exercisesList" layoutX="14.0" layoutY="55.0" prefHeight="110.0" prefWidth="200.0" />
+            <Label layoutX="14.0" layoutY="28.0" text="Utworzone ćwiczenia:" />
+            <Button onAction="#handleDeleteAction" layoutX="171.0" layoutY="322.0" mnemonicParsing="false" text="Usuń" />
+            <Separator layoutX="246.0" layoutY="29.0" orientation="VERTICAL" prefHeight="332.0" prefWidth="6.0" />
+            <Label layoutX="272.0" layoutY="28.0" text="Nowe ćwiczenie" />
+            <TextField fx:id="newExerciseName" layoutX="272.0" layoutY="81.0" prefHeight="25.0" prefWidth="269.0" promptText="Podaj nazwę ćwiczenia" />
+            <Label layoutX="272.0" layoutY="55.0" text="Nazwa:" />
+            <Label layoutX="272.0" layoutY="171.0" text="Opis: " />
+            <TextArea fx:id="newExerciseDesc" layoutX="272.0" layoutY="196.0" prefHeight="108.0" prefWidth="269.0" promptText="Podaj krótki opis" />
+            <Label layoutX="272.0" layoutY="115.0" text="Partia ciała:" />
+            <TextField fx:id="newExerciseBodyPart" layoutX="272.0" layoutY="137.0" prefHeight="25.0" prefWidth="269.0" promptText="Na co wpływają ćwiczenia" />
+            <TextField fx:id="selectedExerciseBodyPart" layoutX="14.0" layoutY="188.0" prefHeight="25.0" prefWidth="201.0" />
+            <Label layoutX="14.0" layoutY="171.0" text="Partia ciała:" />
+            <TextArea fx:id="selectedExerciseDesc" layoutX="14.0" layoutY="238.0" prefHeight="66.0" prefWidth="201.0" />
+            <Label layoutX="14.0" layoutY="221.0" text="Opis: " />
+            <Button onAction="#handleEditAction" layoutX="115.0" layoutY="322.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="createButton" layoutX="498.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleCreateAction" text="Utwórz" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

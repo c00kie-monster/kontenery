@@ -18,4 +18,16 @@ public class WorkoutDAO extends AbstractDAO implements GenericDAO<Workout>{
 		return null;
 	}
 
+	@Override
+	public void delete(Workout workout) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Workout workout) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

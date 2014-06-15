@@ -61,9 +61,17 @@ public class Exercise implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+		
+	public String getBodyPart() {
+		return bodyPart;
+	}
+
+	public void setBodyPart(String bodyPart) {
+		this.bodyPart = bodyPart;
+	}
+
 	@Override
 	public String toString() {
-		return id + " | " +  name + " | " + description;
+		return this.name;
 	}
 }
