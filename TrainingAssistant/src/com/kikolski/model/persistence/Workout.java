@@ -2,13 +2,18 @@ package com.kikolski.model.persistence;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.kikolski.model.validation.interfaces.NotVulgarism;
 
 @Entity
 public class Workout {
@@ -18,12 +23,17 @@ public class Workout {
 	private int id;
 	
 	@Column (unique = true, nullable = false)
+	@NotBlank(message = "Musisz podaæ nazwe treningu")
+	@NotVulgarism(message = "Brzydkie s³ówko w nazwie treningu")
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany
+	@Size(min = 1, message = "Musisz wybraæ co najmniej jedno æwiczenie")
 	private List<Exercise> exercises;
 	
-	private int day;
+	@Column (nullable = false, length = 16)
+	@NotNull (message = "Musisz wybraæ dzien treningu")
+	private String day;
 	
 	public int getId() {
 		return id;
@@ -49,11 +59,16 @@ public class Workout {
 		this.exercises = exercises;
 	}
 
-	public int getDay() {
+	public String getDay() {
 		return day;
 	}
 
-	public void setDay(int day) {
+	public void setDay(String day) {
 		this.day = day;
 	}	
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 }

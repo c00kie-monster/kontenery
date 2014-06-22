@@ -1,3 +1,4 @@
+
 package com.kikolski.model.persistence;
 
 import java.io.Serializable;
@@ -7,19 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
+
+import com.kikolski.model.validation.interfaces.NotVulgarism;
 
 @Entity
 public class Exercise implements Serializable{
 	private static final long serialVersionUID = 9134143186434079669L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column (unique = true, nullable = false, length=16)
+	@NotVulgarism(message = "Brzydkie s³ówko w polu \"Nazwa æwiczenia\"")
 	private String name;
 	
 	@Column (nullable = false, length=16)
+	@NotVulgarism(message = "Brzydkie s³ówko w polu \"Partia cia³a\"")
+	@Size(min = 4, max = 16, message="D³ugoœæ partii cia³a musi mieæ od 4 do 16 znaków")
 	private String bodyPart;
 	
 	private String description;
