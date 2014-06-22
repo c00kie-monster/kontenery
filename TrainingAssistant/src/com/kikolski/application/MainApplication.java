@@ -39,7 +39,7 @@ public class MainApplication extends Application{
 	
 	private void showView(Stage stage) throws IOException {
 		
-		Parent root = FXMLLoader.load(getClass().getResource("../view/MainApplication.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../views/MainApplication.fxml"));
 		Scene scene = new Scene(root, 600, 450);
 		stage.setTitle("Training Assistant");
         stage.setScene(scene);

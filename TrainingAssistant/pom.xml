@@ -9,6 +9,7 @@
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<spring.version>4.0.4.RELEASE</spring.version>
 		<aspectj.version>1.7.4</aspectj.version>
+		<sonar.host.url>http://localhost:9000/</sonar.host.url>
 	</properties>
 
 	<build>
