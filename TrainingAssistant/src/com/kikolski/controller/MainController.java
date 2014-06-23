@@ -18,6 +18,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.stage.Stage;
+
+import org.controlsfx.dialog.Dialogs;
 
 import com.kikolski.application.ContextWrapper;
 import com.kikolski.model.MainModel;
@@ -37,6 +40,7 @@ public class MainController implements Initializable{
 	@FXML private TreeView<Object> planTree;
 	@FXML private TreeItem<Object> root;
 	@FXML private Label planWorkoutDesc;
+	@FXML private Stage stage;
 	
 	private WorkoutService workoutService = ContextWrapper.getBean(WorkoutService.class);;
 	private ExerciseService service = ContextWrapper.getBean(ExerciseService.class);
@@ -69,28 +73,25 @@ public class MainController implements Initializable{
 			model.getExercises().add(exercise);
 			exercisesList.getItems().add(exercise);
 			exercisesListForWorkout.getItems().add(exercise);
+			clearNewExerciseFields();
 		} catch (ValidationException exception) {
-			for (UserError error : exception.getErrorsList())
-				System.out.println(error);
+			showErrorMessage(exception.getErrorsList());
 		} catch (DAOException dao) {
-			System.out.println("Z³apa³em wyj¹tek z dao.");
+			showErrorMessage("Nie mo¿na dodaæ tego æwiczenia do bazy");
 		} 		
-		clearNewExerciseFields();
+	
 	}
 		
 	@FXML private void handleDeleteExerciseAction(ActionEvent event) {
 		Exercise exercise = exercisesList.getSelectionModel().getSelectedItem();
-		//try {
+		try{
 			service.delete(exercise);
 			model.getExercises().remove(exercise);
 			exercisesList.getItems().remove(exercise);
 			exercisesListForWorkout.getItems().remove(exercise);
-//		} catch (ValidationException e) {
-//			System.out.println("B³¹d walidacji");
-//		} catch (DAOException e) {
-//			
-//			e.printStackTrace();
-//		} 
+		} catch (Exception e) {
+			showErrorMessage("Nie mo¿na usun¹æ tego æwiczenia - jest uzywane w treningu");
+		}
 	}
 	
 	@FXML
@@ -104,12 +105,11 @@ public class MainController implements Initializable{
 			exercise.setDescription(selectedExerciseDesc.getText());
 			service.update(exercise);
 		} catch (ValidationException exception) {
-			for (UserError error : exception.getErrorsList())
-				System.out.println(error);
+			showErrorMessage(exception.getErrorsList());
 			exercise.setBodyPart(currentBodyPart);
 			exercise.setDescription(currentDesc);
 		} catch (DAOException dao) {
-			System.out.println("Z³apa³em wyj¹tek z dao.");
+			showErrorMessage("Nie mo¿na edytowaæ tego æwiczenia do bazy");
 		}
 	}
 	
@@ -125,8 +125,7 @@ public class MainController implements Initializable{
 			clearWorkoutFields();
 			createDaysTree();
 		} catch (ValidationException e) {
-			for (UserError error : e.getErrorsList())
-				System.out.println(error);
+			showErrorMessage(e.getErrorsList());
 		} catch (DAOException e){
 			e.printStackTrace();
 		}
@@ -179,6 +178,17 @@ public class MainController implements Initializable{
 		}
 		planTree.setRoot(root);
 		root.setExpanded(true);
+	}
+	
+	private void showErrorMessage(List<UserError> errors) {
+		StringBuilder builder = new StringBuilder();
+		for (UserError error : errors)
+			builder.append(error.getMessage()).append("\n");
+		Dialogs.create().message(builder.toString()).showError();
+	}
+	
+	private void showErrorMessage(String message) {
+		Dialogs.create().message(message).showError();
 	}
 	
 	private class WorkoutSelectionChangedListener implements ChangeListener<TreeItem> {

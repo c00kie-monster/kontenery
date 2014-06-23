@@ -23,6 +23,7 @@ public class Exercise implements Serializable{
 	
 	@Column (unique = true, nullable = false, length=16)
 	@NotVulgarism(message = "Brzydkie s³ówko w polu \"Nazwa æwiczenia\"")
+	@Size(min = 1, max = 16, message="Nazwa æwiczenia musi mieæ od 1 do 16 znaków")
 	private String name;
 	
 	@Column (nullable = false, length=16)

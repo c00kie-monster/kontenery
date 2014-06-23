@@ -18,6 +18,6 @@ public class VulgarismConstraintValidator implements ConstraintValidator<NotVulg
 		if (word == null || word.trim().length() == 0 )
 			return true;
 					
-		return !Arrays.asList(vulgarisms).contains(word);
+		return !Arrays.asList(vulgarisms).contains(word.toLowerCase());
 	}
 }
