@@ -42,7 +42,7 @@ public class MainController implements Initializable{
 	@FXML private Label planWorkoutDesc;
 	@FXML private Stage stage;
 	
-	private WorkoutService workoutService = ContextWrapper.getBean(WorkoutService.class);;
+	private WorkoutService workoutService = ContextWrapper.getBean(WorkoutService.class);
 	private ExerciseService service = ContextWrapper.getBean(ExerciseService.class);
 	private List<String> trainingDays = (List<String>) ContextWrapper.getBean("days");
 	private MainModel model = ContextWrapper.getBean(MainModel.class);
@@ -97,6 +97,12 @@ public class MainController implements Initializable{
 	@FXML
 	private void handleEditExerciseAction(ActionEvent event) {
 		Exercise exercise = exercisesList.getSelectionModel().getSelectedItem();
+		
+		if (exercise == null) {
+			showErrorMessage("Nie wybrano æwiczenia.");
+			return;
+		}
+		
 		String currentDesc = exercise.getDescription();
 		String currentBodyPart = exercise.getBodyPart();
 
@@ -109,7 +115,7 @@ public class MainController implements Initializable{
 			exercise.setBodyPart(currentBodyPart);
 			exercise.setDescription(currentDesc);
 		} catch (DAOException dao) {
-			showErrorMessage("Nie mo¿na edytowaæ tego æwiczenia do bazy");
+			showErrorMessage("Nie mo¿na edytowaæ tego æwiczenia");
 		}
 	}
 	
@@ -155,6 +161,11 @@ public class MainController implements Initializable{
 
 	@FXML private void deleteFromCurrentPlan(ActionEvent event) {
 		TreeItem<Object> selectedObject = (TreeItem<Object>) planTree.getSelectionModel().getSelectedItem();
+		
+		if (selectedObject == null) {
+			showErrorMessage("Musisz wybraæ jeden plan æwiczeñ.");
+		}
+		
 		if (selectedObject.getValue() instanceof Workout) {
 			Workout workout = (Workout) selectedObject.getValue();
 			selectedObject.getParent().getChildren().remove(selectedObject);

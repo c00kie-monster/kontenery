@@ -17,8 +17,6 @@ public class ExerciseService {
 	public static final String BEAN_ID = "exerciseService"; 
 
 	private GenericDAO<Exercise> exerciseDAO;
-
-	
 	
 	public void add(Exercise exercise) throws ValidationException, DAOException{
 		exerciseDAO.add(exercise);
@@ -31,15 +29,9 @@ public class ExerciseService {
 		return result;
 	}
 
-	public void delete(Exercise exercise) {
+	public void delete(Exercise exercise) throws DAOException{
 		if (exercise != null)
-			try {
 				exerciseDAO.delete(exercise);
-			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 	}
 	
 	public void update(Exercise exercise)  throws ValidationException, DAOException{
